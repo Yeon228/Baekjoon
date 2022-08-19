@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 public class Main{
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,54 +16,53 @@ public class Main{
                 box[j][i] = Integer.parseInt(tempArr[j]);
             }
         }
+
         int day = 0;
+        int afterZero = 0;
         boolean isFull = false;
         while (!isFull){
-            int dayCount = 0;
-            boolean tempBool = true;
-            for(int i = 0; i < n; i++){
-                for(int j = 0; j < m; j++){
-                    if(box[j][i] == 0){
-                        tempBool =false;
-                        break;
+            int beforeZero = 0;
+            boolean tempFull = true;
+            for(int i = 0; i < m; i++){
+                for(int j = 0; j < n; j++){
+                    if(box[i][j] == 0){
+                        tempFull = false;
+                        beforeZero++;
+                    }
+                    if(box[i][j] == 2){
+                        box[i][j] = 1;
                     }
                 }
             }
-            isFull = tempBool;
-            for(int i = 0; i < n; i++){
-                for(int j = 0; j < m; j++){
-                    if(box[j][i] == 1){
-                        try{
-                            box[j + 1][i] = 2;
-                        }catch (ArrayIndexOutOfBoundsException ex){
-
-                        }
-                        try{
-                            box[j - 1][i] = 2;
-                        }catch (ArrayIndexOutOfBoundsException ex){
-
-                        }
-                        try{
-                            box[j][i - 1] = 2;
-                        }catch (ArrayIndexOutOfBoundsException ex){
-
-                        }
-                        try{
-                            box[j][j + 1] = 2;
-                        }catch (ArrayIndexOutOfBoundsException ex){
-
-                        }
-                    }
-                }
+            isFull = tempFull;
+            if(isFull){
+                System.out.println(day);
+                return;
             }
-            for(int i = 0; i < n; i++){
-                for(int j = 0; j < m; j++){
-                    if(box[j][i] == 2){
-                        box[j][i] = 1;
+            for(int i = 0; i < m; i++){
+                for(int j = 0; j < n; j++){
+                    if(box[i][j] == 1){
+                        if(i < m - 1 && box[i+1][j] == 0){
+                            box[i+1][j] = 2;
+                        }
+                        if(i > 0 && box[i-1][j] == 0){
+                            box[i-1][j] = 2;
+                        }
+                        if(j < n - 1 && box[i][j+1] == 0){
+                            box[i][j+1] = 2;
+                        }
+                        if(j > 0 && box[i][j-1] == 0){
+                            box[i][j-1] = 2;
+                        }
                     }
                 }
             }
             day++;
+            if(beforeZero == afterZero){
+                System.out.println("-1");
+                return;
+            }
+            afterZero = beforeZero;
         }
         System.out.println(day);
     }
