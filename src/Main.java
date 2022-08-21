@@ -34,29 +34,6 @@ public class Main{
                     }
                 }
             }
-            isFull = tempFull;
-            if(isFull){
-                System.out.println(day);
-                return;
-            }
-            for(int i = 0; i < m; i++){
-                for(int j = 0; j < n; j++){
-                    if(box[i][j] == 1){
-                        if(i < m - 1 && box[i+1][j] == 0){
-                            box[i+1][j] = 2;
-                        }
-                        if(i > 0 && box[i-1][j] == 0){
-                            box[i-1][j] = 2;
-                        }
-                        if(j < n - 1 && box[i][j+1] == 0){
-                            box[i][j+1] = 2;
-                        }
-                        if(j > 0 && box[i][j-1] == 0){
-                            box[i][j-1] = 2;
-                        }
-                    }
-                }
-            }
             day++;
             if(beforeZero == afterZero){
                 System.out.println("-1");
